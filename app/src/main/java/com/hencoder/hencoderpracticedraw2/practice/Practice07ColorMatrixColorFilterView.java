@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -14,6 +17,12 @@ import com.hencoder.hencoderpracticedraw2.R;
 public class Practice07ColorMatrixColorFilterView extends View {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Bitmap bitmap;
+    private static final float[] COMMON = new float[] {
+            1, 0, 0, 0, 0,
+            0, 1, 0, 0, 0,
+            0, 0, 1, 0, 0,
+            0, 0, 0, 1, 0
+    };
 
     public Practice07ColorMatrixColorFilterView(Context context) {
         super(context);
@@ -37,7 +46,11 @@ public class Practice07ColorMatrixColorFilterView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+//        ColorFilter colorFilter = new ColorMatrixColorFilter(COMMON);
+        ColorMatrix colorMatrix = new ColorMatrix(COMMON);
+        colorMatrix.setSaturation(0);
+        ColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+        paint.setColorFilter(colorFilter);
         canvas.drawBitmap(bitmap, 0, 0, paint);
     }
 }
